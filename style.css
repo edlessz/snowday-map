@@ -1,0 +1,27 @@
+html {
+  overflow: hidden;
+}
+
+svg {
+  position: absolute;
+}
+
+polygon {
+    fill: white;
+    stroke: black;
+    stroke-width: 3px;
+}
+
+#mouse {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  background-color: white;
+  border: 1px solid black;
+
+  padding: 1em;
+
+  pointer-events: none;
+  transform: translate(1em, 1em);
+  display: none;
+}
