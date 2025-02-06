@@ -18,7 +18,6 @@ const refreshData = (src, refreshDropdown) => {
   $(srcParent).load(src, () => {
     dropdownSelected =
       $("select")[0].value.length > 0 ? $("select")[0].value : "1";
-    console.log(dropdownSelected);
     const rows = Array.from(
       $($(srcParent).find("table")[1]).find("tbody").children()
     ).filter((x) => x.getAttribute("df") === dropdownSelected);
