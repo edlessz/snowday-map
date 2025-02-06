@@ -9,13 +9,32 @@ const toTitleCase = (str) =>
   );
 
 // Parse data
-const refreshData = (src) => {
+
+const refreshData = (src, refreshDropdown) => {
+  [...document.querySelectorAll("polygon")].forEach(
+    (x) => (x.style.fill = "white")
+  );
   const srcParent = document.createElement("div");
   $(srcParent).load(src, () => {
+    dropdownSelected =
+      $("select")[0].value.length > 0 ? $("select")[0].value : "1";
+    console.log(dropdownSelected);
     const rows = Array.from(
       $($(srcParent).find("table")[1]).find("tbody").children()
-    );
-    console.log(rows);
+    ).filter((x) => x.getAttribute("df") === dropdownSelected);
+
+    if (refreshDropdown) {
+      $("select").html(
+        [...$(srcParent).find("#table_header div")]
+          .map((x, i) => `<option value="${i}">${x.innerText}</option>`)
+          .join("")
+      );
+
+      [...document.querySelectorAll("option")].find((x) =>
+        x.innerText.includes("Tomorrow")
+      ).selected = true;
+    }
+
     rows.forEach((row) => {
       const name = row.children[0].innerText;
       const status = simplify(row.children[2].innerText);
@@ -35,8 +54,8 @@ const refreshData = (src) => {
     console.log(`[${new Date().toLocaleTimeString()}] Refreshed`);
   });
 };
-window.addEventListener("load", () => refreshData(src));
-setInterval(() => refreshData(src), 60000);
+window.addEventListener("load", () => refreshData(src, true));
+setInterval(() => refreshData(src, false), 60000);
 
 // Panning
 const svg = $("svg")[0];
@@ -86,3 +105,5 @@ document.querySelectorAll("polygon").forEach((district) => {
     $("#mouse")[0].style.display = "block";
   });
 });
+
+$("select").on("change", () => refreshData(src, false));

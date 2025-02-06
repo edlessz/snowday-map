@@ -35,3 +35,9 @@ polygon {
   right: 1em;
   text-align: right;
 }
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
